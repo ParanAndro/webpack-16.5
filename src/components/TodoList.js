@@ -3,9 +3,9 @@ import style from './TodoList.css';
 import Todo from './Todo';
 
 const TodoList = props => {
-    const todoListTasks = props.data.map(work => <Todo id={task.id} name={task.text} remove={props.remove}/>)
+    const todoListTasks = props.data.map(task => <Todo id={task.id} key={task.key} name={task.text} remove={props.remove}/>)
     return (
-        <ul className={style.TodoList}>{todoListItems}</ul>
+        <ul className={style.TodoList}>{todoListTasks}</ul>
     )
 }
 

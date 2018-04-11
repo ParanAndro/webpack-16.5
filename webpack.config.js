@@ -3,9 +3,13 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
+const env = process.env.NODE_ENV || 'development';
 
 module.exports = { 
-	entry: './src/index.js',
+	entry: [
+		'react-hot-loader/patch',
+		'./src/index.js'
+	],
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'app.bundle.js'
@@ -45,3 +49,14 @@ module.exports = {
 		})
 	]
 };
+
+console.log('NODE_ENV:', env);
+
+if (env === 'production') {
+plugins.push(
+	new webpack.optimize.UglifyJsPlugin(),
+	new OptimizeJsPlugin({
+	  sourceMap: false
+	})
+);
+}
