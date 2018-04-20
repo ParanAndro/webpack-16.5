@@ -6,6 +6,17 @@ const OptimizeJsPlugin = require('optimize-js-plugin');
 const env = process.env.NODE_ENV || 'development';
 const plugins = [];
 
+console.log('NODE_ENV:', env);
+
+if (env === 'production') {
+	plugins.push(
+		new webpack.optimize.UglifyJsPlugin(),
+		new OptimizeJsPlugin({
+			sourceMap: false
+		})
+	);
+}
+
 module.exports = { 
 	entry: [
 		'react-hot-loader/patch',
@@ -38,26 +49,6 @@ module.exports = {
 			}
 		]
 	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: 'src/index.html',
-			filename: 'index.html',
-			inject: 'body'
-		}),
-		new webpack.optimize.UglifyJsPlugin(),
-		new OptimizeJsPlugin({
-			sourceMap: false
-		})
-	]
+	plugins
 };
 
-console.log('NODE_ENV:', env);
-
-if (env === 'production') {
-plugins.push(
-	new webpack.optimize.UglifyJsPlugin(),
-	new OptimizeJsPlugin({
-	  sourceMap: false
-	})
-);
-}
